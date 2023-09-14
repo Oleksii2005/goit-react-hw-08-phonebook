@@ -9,43 +9,39 @@ const initialState = {
 };
 
 const logInFulfilled = (state, { payload }) => {
-  state.user = payload.user;
-  state.token = payload.token;
-  state.isLoggedIn = true;
-};
+     state.user = payload.user;
+      state.token = payload.token;
+      state.isLoggedIn = true;
+}
 
-const logOutFulfilled = state => {
-  state.user = { name: null, email: null };
-  state.token = null;
-  state.isLoggedIn = false;
-};
+const logOutFulfilled = (state) => {
+    state.user = { name: null, email: null };
+    state.token = null;
+    state.isLoggedIn = false;
+}
 
-const refreshUserPending = state => {
-  state.isRefreshing = true;
-};
+const refreshUserPending = (state) => { state.isRefreshing = true; }
 
 const refreshUserFulfilled = (state, { payload }) => {
-  state.user = payload;
-  state.isLoggedIn = true;
-  state.isRefreshing = false;
-};
+      state.user = payload;
+      state.isLoggedIn = true;
+      state.isRefreshing = false;
+}
 
-const refreshUserRejected = state => {
-  state.isRefreshing = false;
-};
+const refreshUserRejected = (state) => { state.isRefreshing = false; }
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState,
-  extraReducers: builder => {
-    builder
-      .addCase(register.fulfilled, logInFulfilled)
-      .addCase(logIn.fulfilled, logInFulfilled)
-      .addCase(logOut.fulfilled, logOutFulfilled)
-      .addCase(refreshUser.pending, refreshUserPending)
-      .addCase(refreshUser.fulfilled, refreshUserFulfilled)
-      .addCase(refreshUser.rejected, refreshUserRejected);
-  },
-});
+    initialState,
+  extraReducers: (builder) =>{
+      builder
+        .addCase(register.fulfilled, logInFulfilled)
+        .addCase(logIn.fulfilled, logInFulfilled)
+        .addCase(logOut.fulfilled, logOutFulfilled)
+        .addCase(refreshUser.pending, refreshUserPending)
+        .addCase(refreshUser.fulfilled, refreshUserFulfilled)
+        .addCase(refreshUser.rejected, refreshUserRejected)
+    }
+})
 
 export const authReducer = authSlice.reducer;
